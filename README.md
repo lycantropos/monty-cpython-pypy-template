@@ -6,36 +6,25 @@
 [![](https://img.shields.io/github/license/{{github_login}}/{{project}}.svg)](https://github.com/{{github_login}}/{{project}}/blob/master/LICENSE "License")
 [![](https://badge.fury.io/py/{{project}}.svg)](https://badge.fury.io/py/{{project}} "PyPI")
 
-In what follows
-- `python` is an alias for `python{{min_python_version.split('.')[:2]|join('.')}}` or any later
-version (`python{{min_python_version.split('.')[0]}}.{{min_python_version.split('.')[1]|int + 1}}` and so on),
-- `pypy` is an alias for `pypy{{min_python_version.split('.')[:2]|join('.')}}` or any later
-version (`pypy{{min_python_version.split('.')[0]}}.{{min_python_version.split('.')[1]|int + 1}}` and so on).
+In what follows `python` is an alias for `python{{min_python_version.split('.')[:2]|join('.')}}`
+or `pypy{{min_python_version.split('.')[:2]|join('.')}}`
+or any later version
+(`python{{min_python_version.split('.')[0]}}.{{min_python_version.split('.')[1]|int + 1}}`, `pypy{{min_python_version.split('.')[0]}}.{{min_python_version.split('.')[1]|int + 1}}` and so on).
 
 Installation
 ------------
 
-Install the latest `pip` & `setuptools` packages versions:
-- with `CPython`
-  ```bash
-  python -m pip install --upgrade pip setuptools
-  ```
-- with `PyPy`
-  ```bash
-  pypy -m pip install --upgrade pip setuptools
-  ```
+Install the latest `pip` & `setuptools` packages versions
+```bash
+python -m pip install --upgrade pip setuptools
+```
 
 ### User
 
 Download and install the latest stable version from `PyPI` repository:
-- with `CPython`
-  ```bash
-  python -m pip install --upgrade {{project}}
-  ```
-- with `PyPy`
-  ```bash
-  pypy -m pip install --upgrade {{project}}
-  ```
+```bash
+python -m pip install --upgrade {{project}}
+```
 
 ### Developer
 
@@ -45,25 +34,15 @@ git clone https://github.com/{{github_login}}/{{project}}.git
 cd {{project}}
 ```
 
-Install dependencies:
-- with `CPython`
-  ```bash
-  python -m pip install --force-reinstall -r requirements.txt
-  ```
-- with `PyPy`
-  ```bash
-  pypy -m pip install --force-reinstall -r requirements.txt
-  ```
+Install dependencies
+```bash
+python -m pip install --force-reinstall -r requirements.txt
+```
 
-Install:
-- with `CPython`
-  ```bash
-  python setup.py install
-  ```
-- with `PyPy`
-  ```bash
-  pypy setup.py install
-  ```
+Install
+```bash
+python setup.py install
+```
 
 Development
 -----------
@@ -111,15 +90,10 @@ This will set version to `major.minor.patch`.
 
 ### Running tests
 
-Install dependencies:
-- with `CPython`
-  ```bash
-  python -m pip install --force-reinstall -r requirements-tests.txt
-  ```
-- with `PyPy`
-  ```bash
-  pypy -m pip install --force-reinstall -r requirements-tests.txt
-  ```
+Install dependencies
+```bash
+python -m pip install --force-reinstall -r requirements-tests.txt
+```
 
 Plain
 ```bash
