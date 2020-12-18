@@ -35,7 +35,7 @@ steps:
     displayName: 'Install packaging tools'
   - bash: python -m pip install -r requirements.txt
     displayName: 'Install dependencies'
-  - bash: python -m pip install --upgrade codecov
+  - bash: python -m pip install --upgrade coverage codecov
     displayName: 'Install coverage dependencies'
   - bash: coverage run -m doctest README.md
     displayName: 'Run doctests'
