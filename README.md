@@ -34,7 +34,7 @@ cd {{project}}
 
 Install dependencies
 ```bash
-python -m pip install --force-reinstall -r requirements.txt
+python -m pip install -r requirements.txt
 ```
 
 Install
@@ -90,7 +90,7 @@ This will set version to `major.minor.patch`.
 
 Install dependencies
 ```bash
-python -m pip install --force-reinstall -r requirements-tests.txt
+python -m pip install -r requirements-tests.txt
 ```
 
 Plain
