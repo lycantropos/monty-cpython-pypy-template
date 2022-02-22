@@ -50,18 +50,19 @@ steps:
     displayName: 'Upload coverage'
     env:
       CODECOV_TOKEN: $(CODECOV_TOKEN)
-  - bash: python -m pip install --upgrade wheel
-    condition: and(succeeded(), eq(variables['python.version'], '3.5'), startsWith(variables['Build.SourceBranch'], 'refs/tags/'))
-    displayName: 'Install build dependencies'
-  - bash: python setup.py sdist bdist_wheel
-    condition: and(succeeded(), eq(variables['python.version'], '3.5'), startsWith(variables['Build.SourceBranch'], 'refs/tags/'))
-    displayName: 'Build'
-  - bash: python -m pip install --upgrade twine
-    condition: and(succeeded(), eq(variables['python.version'], '3.5'), startsWith(variables['Build.SourceBranch'], 'refs/tags/'))
-    displayName: 'Install deploy dependencies'
-  - bash: twine upload --skip-existing dist/*
-    condition: and(succeeded(), eq(variables['python.version'], '3.5'), startsWith(variables['Build.SourceBranch'], 'refs/tags/'))
-    displayName: 'Deploy'
-    env:
-      TWINE_USERNAME: __token__
-      TWINE_PASSWORD: $(TWINE_PASSWORD)
+  - ${{ if and(eq(variables['python.version'], '3.{{min_python_version.split(".")[1]}}'), startsWith(variables['Build.SourceBranch'], 'refs/tags/')) }}:
+    - bash: python -m pip install --upgrade wheel
+      condition: succeeded()
+      displayName: 'Install build dependencies'
+    - bash: python setup.py sdist bdist_wheel
+      condition: succeeded()
+      displayName: 'Build'
+    - bash: python -m pip install --upgrade twine
+      condition: succeeded()
+      displayName: 'Install deploy dependencies'
+    - bash: twine upload --skip-existing dist/*
+      condition: succeeded()
+      displayName: 'Deploy'
+      env:
+        TWINE_USERNAME: __token__
+        TWINE_PASSWORD: $(TWINE_PASSWORD)
