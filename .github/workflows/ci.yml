@@ -33,10 +33,12 @@ jobs:
         run: python -m pip install -U coverage
       - name: 'Install dependencies'
         run: python -m pip install -r requirements.txt
-      - name: 'Run doctests'
-        run: coverage run -m doctest README.md
       - name: 'Install tests dependencies'
         run: python -m pip install -r requirements-tests.txt
+      - name: 'Run doctests'
+        run: >
+          coverage run -m doctest README.md
+          && coverage run --append -m pytest --doctest-modules --ignore=tests
       - name: 'Run tests'
         run: coverage run --append -m pytest
       - name: 'Collect coverage'
