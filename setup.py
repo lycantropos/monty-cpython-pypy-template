@@ -21,15 +21,15 @@ setup(name={{project}}.__name__,
       author='{{full_name}}',
       author_email='{{email}}',
       classifiers=[
-          '{{license_classifier}}',
-{% for minor in range(min_python_version.split(".")[1]|int, (max_python_version.split(".")[1])|int + 1) %}
+          '{{trove_license_classifier}}',
+{% for minor in range(min_version_of['python'].split(".")[1]|int, (max_python_version.split(".")[1])|int + 1) %}
           'Programming Language :: Python :: 3.{{minor}}',
 {% endfor %}
           'Programming Language :: Python :: Implementation :: CPython',
           'Programming Language :: Python :: Implementation :: PyPy',
       ],
-      license='{{license}}',
+      license='{{spdx_license_name}}',
       url=project_base_url,
       download_url=project_base_url + 'archive/master.zip',
-      python_requires='>={{min_python_version}}',
+      python_requires='>={{min_version_of['python']}}',
       install_requires=read_file('requirements.txt'))
