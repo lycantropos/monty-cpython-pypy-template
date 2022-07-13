@@ -22,7 +22,7 @@ setup(name={{project}}.__name__,
       author_email='{{email}}',
       classifiers=[
           '{{trove_license_classifier}}',
-{% for minor in range(min_version_of['python'].split(".")[1]|int, (max_python_version.split(".")[1])|int + 1) %}
+{% for minor in range(min_version_of['python'].split(".")[1]|int, (max_version_of['python'].split(".")[1])|int + 1) %}
           'Programming Language :: Python :: 3.{{minor}}',
 {% endfor %}
           'Programming Language :: Python :: Implementation :: CPython',
