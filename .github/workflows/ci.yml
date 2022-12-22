@@ -35,12 +35,14 @@ jobs:
           },
         ]
         include:
-          - python_version: 'pypy-{{ min_version_of['python'].split('.')[:2] | join('.') }}'
+{% for minor in range(min_version_of['pypy'].split('.')[1]|int, (max_version_of['pypy'].split('.')[1])|int + 1) %}
+          - python_version: 'pypy-{{ min_version_of['pypy'].split('.')[0] }}.{{ minor }}'
             platform: { os: 'macos-latest', python_architecture: 'x64' }
-          - python_version: 'pypy-{{ min_version_of['python'].split('.')[:2] | join('.') }}'
+          - python_version: 'pypy-{{ min_version_of['pypy'].split('.')[0] }}.{{ minor }}'
             platform: { os: 'ubuntu-latest', python_architecture: 'x64' }
-          - python_version: 'pypy-{{ min_version_of['python'].split('.')[:2] | join('.') }}'
+          - python_version: 'pypy-{{ min_version_of['pypy'].split('.')[0] }}.{{ minor }}'
             platform: { os: 'windows-latest', python_architecture: 'x64' }
+{% endfor %}
     steps:
       - name: 'Checkout'
         uses: actions/checkout@v3
@@ -129,12 +131,14 @@ jobs:
           },
         ]
         include:
-          - python_version: 'pypy-{{ min_version_of['python'].split('.')[:2] | join('.') }}'
+{% for minor in range(min_version_of['pypy'].split('.')[1]|int, (max_version_of['pypy'].split('.')[1])|int + 1) %}
+          - python_version: 'pypy-{{ min_version_of['pypy'].split('.')[0] }}.{{ minor }}'
             platform: { os: 'macos-latest', python_architecture: 'x64' }
-          - python_version: 'pypy-{{ min_version_of['python'].split('.')[:2] | join('.') }}'
+          - python_version: 'pypy-{{ min_version_of['pypy'].split('.')[0] }}.{{ minor }}'
             platform: { os: 'ubuntu-latest', python_architecture: 'x64' }
-          - python_version: 'pypy-{{ min_version_of['python'].split('.')[:2] | join('.') }}'
+          - python_version: 'pypy-{{ min_version_of['pypy'].split('.')[0] }}.{{ minor }}'
             platform: { os: 'windows-latest', python_architecture: 'x64' }
+{% endfor %}
     steps:
       - name: 'Setup Python'
         uses: actions/setup-python@v2
