@@ -48,10 +48,10 @@ jobs:
         uses: actions/checkout@v3
       - name: 'Install Mypy'
         run: python -m pip install -U mypy
-{% if min_version_of['pypy'].split('.')[1]|int == 7 %}        if: ${{ matrix.python_version != 'pypy-3.7' }}
+{% if min_version_of['pypy'].split('.')[1]|int == 7 %}        if: ${{ '{{ matrix.python_version != \'pypy-3.7\' }}' }}
 {% endif %}      - name: 'Run Mypy'
-        run: python -m mypy ${{ github.event.repository.name }}
-{% if min_version_of['pypy'].split('.')[1]|int == 7 %}        if: ${{ matrix.python_version != 'pypy-3.7' }}
+        run: python -m mypy ${{ '{{ github.event.repository.name }}' }}
+{% if min_version_of['pypy'].split('.')[1]|int == 7 %}        if: ${{ '{{ matrix.python_version != \'pypy-3.7\' }}' }}
 {% endif %}      - name: 'Setup Python'
         uses: actions/setup-python@v4
         with:
