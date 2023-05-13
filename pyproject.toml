@@ -1,5 +1,6 @@
 [project]
 name = "{{project}}"
+description = "{{description}}"
 authors = [{ name = "{{full_name}}", email = "{{email}}" }]
 readme = "README.md"
 license = { file = "LICENSE" }
