@@ -45,7 +45,7 @@ jobs:
 {% endfor %}
     steps:
       - name: 'Checkout'
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
       - name: 'Setup Python'
         uses: actions/setup-python@v4
         with:
@@ -70,7 +70,7 @@ jobs:
       - name: 'Collect coverage'
         run: coverage xml
       - name: 'Upload coverage'
-        uses: codecov/codecov-action@v3.1.3
+        uses: codecov/codecov-action@v3
         with:
           fail_ci_if_error: false
         continue-on-error: true
@@ -90,7 +90,7 @@ jobs:
     needs: pre-deploy
     steps:
       - name: 'Checkout'
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
       - name: 'Setup Python'
         uses: actions/setup-python@v4
       - name: 'Install packaging tools'
@@ -163,7 +163,7 @@ jobs:
           name: dist
           path: dist
       - name: 'PyPI upload'
-        uses: pypa/gh-action-pypi-publish@v1.8.6
+        uses: pypa/gh-action-pypi-publish@v1.8.10
         with:
           packages_dir: dist
           password: ${{ '{{ secrets.PYPI_API_TOKEN }}' }}
