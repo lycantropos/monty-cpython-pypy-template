@@ -10,6 +10,21 @@ on:
       - 'master'
 
 jobs:
+  check:
+    name: Check
+    runs-on: ubuntu-latest
+    steps:
+      - name: 'Checkout'
+        uses: actions/checkout@v4
+      - name: 'Setup Python'
+        uses: actions/setup-python@v5
+        with:
+          python-version: '{{max_version_of['python'].split('.')[:2] | join('.')}}'
+      - name: 'Install pre-commit'
+        run: python -m pip install -U pre-commit
+      - name: 'Run pre-commit'
+        run: pre-commit run --all-files
+
   test:
     name: 'Test'
     runs-on: ${{ '{{ matrix.platform.os }}' }}
@@ -47,19 +62,11 @@ jobs:
       - name: 'Checkout'
         uses: actions/checkout@v4
       - name: 'Setup Python'
-        uses: actions/setup-python@v4
+        uses: actions/setup-python@v5
         with:
           python-version: ${{ '{{ matrix.python_version }}' }}
           architecture: ${{ '{{ matrix.platform.python_architecture }}' }}
-      - name: 'Install in editable mode'
-        run: python -m pip -v install -e .[tests]
-      - name: 'Install Mypy'
-        run: python -m pip install -U mypy
-{% if min_version_of['pypy'].split('.')[1]|int == 7 %}        if: ${{ '{{ matrix.python_version != \'pypy-3.7\' }}' }}
-{% endif %}      - name: 'Run Mypy'
-        run: python -m mypy ${{ '{{ github.event.repository.name }}' }}
-{% if min_version_of['pypy'].split('.')[1]|int == 7 %}        if: ${{ '{{ matrix.python_version != \'pypy-3.7\' }}' }}
-{% endif %}      - name: 'Install coverage dependencies'
+      - name: 'Install coverage dependencies'
         run: python -m pip install -U coverage[toml]
       - name: 'Run doctests'
         run: >
@@ -70,7 +77,7 @@ jobs:
       - name: 'Collect coverage'
         run: coverage xml
       - name: 'Upload coverage'
-        uses: codecov/codecov-action@v3
+        uses: codecov/codecov-action@v4
         with:
           fail_ci_if_error: false
         continue-on-error: true
@@ -92,7 +99,7 @@ jobs:
       - name: 'Checkout'
         uses: actions/checkout@v4
       - name: 'Setup Python'
-        uses: actions/setup-python@v4
+        uses: actions/setup-python@v5
       - name: 'Install packaging tools'
         run: python -m pip install -U build pip setuptools wheel
       - name: 'Build'
@@ -139,12 +146,12 @@ jobs:
 {% endfor %}
     steps:
       - name: 'Setup Python'
-        uses: actions/setup-python@v4
+        uses: actions/setup-python@v5
         with:
           python-version: ${{ '{{ matrix.python_version }}' }}
           architecture: ${{ '{{ matrix.platform.python_architecture }}' }}
       - name: 'Download distributions'
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: dist
           path: dist
@@ -158,12 +165,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: 'Download distributions'
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: dist
           path: dist
       - name: 'PyPI upload'
-        uses: pypa/gh-action-pypi-publish@v1.8.10
+        uses: pypa/gh-action-pypi-publish@v1.8.14
         with:
           packages_dir: dist
           password: ${{ '{{ secrets.PYPI_API_TOKEN }}' }}
