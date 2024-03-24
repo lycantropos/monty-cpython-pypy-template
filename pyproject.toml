@@ -11,8 +11,6 @@ classifiers = [
 {% endfor %}
     "Programming Language :: Python :: Implementation :: CPython",
     "Programming Language :: Python :: Implementation :: PyPy",
-    "Programming Language :: Python :: Implementation :: CPython",
-    "Programming Language :: Python :: Implementation :: PyPy"
 ]
 requires-python = ">={{min_version_of['python']}}"
 dependencies = []
@@ -34,11 +32,42 @@ build-backend = "setuptools.build_meta"
 [tool.coverage.run]
 source = ["{{project}}"]
 
-[tool.mypy]
-strict = true
-
 [tool.pytest.ini_options]
 addopts = "--verbose -s --hypothesis-profile=default"
+
+[tool.ruff]
+line-length = 79
+
+[tool.ruff.format]
+docstring-code-format = true
+quote-style = "single"
+skip-magic-trailing-comma = true
+
+[tool.ruff.lint]
+select = [
+    # flake8-bugbear
+    "B",
+    # pycodestyle
+    "E",
+    # Pyflakes
+    "F",
+    # isort
+    "I",
+    # flake8-simplify
+    "SIM",
+    # pyupgrade
+    "UP",
+]
+ignore = [
+    "E203", # Whitespace before ':'
+]
+
+[tool.ruff.lint.isort]
+case-sensitive = true
+combine-as-imports = true
+known-local-folder = ["tests"]
+relative-imports-order = "closest-to-furthest"
+split-on-trailing-comma = false
 
 [tool.setuptools.dynamic]
 version = { attr = "{{project}}.__version__" }
