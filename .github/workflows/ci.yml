@@ -1,4 +1,4 @@
-name: CI
+name: 'CI'
 
 on:
   push:
@@ -11,13 +11,13 @@ on:
 
 jobs:
   check:
-    name: Check
+    name: 'Check'
     runs-on: ubuntu-latest
     steps:
       - name: 'Checkout'
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
       - name: 'Setup Python'
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v6
         with:
           python-version: '{{ max_version_of['python'].split('.')[:2] | join('.') }}'
       - name: 'Install pre-commit'
@@ -60,9 +60,9 @@ jobs:
 {% endfor %}
     steps:
       - name: 'Checkout'
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
       - name: 'Setup Python'
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v6
         with:
           python-version: ${{ '{{ matrix.python_version }}' }}
           architecture: ${{ '{{ matrix.platform.python_architecture }}' }}
@@ -77,7 +77,7 @@ jobs:
       - name: 'Collect coverage'
         run: coverage xml
       - name: 'Upload coverage'
-        uses: codecov/codecov-action@v4
+        uses: codecov/codecov-action@v5
         with:
           fail_ci_if_error: false
         continue-on-error: true
@@ -97,21 +97,21 @@ jobs:
     needs: pre-deploy
     steps:
       - name: 'Checkout'
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
       - name: 'Setup Python'
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v6
       - name: 'Install packaging tools'
         run: python -m pip install -U build pip setuptools wheel
       - name: 'Build'
         run: python -m build --sdist --wheel
       - name: 'Upload'
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v5
         with:
           name: dist
           path: dist
 
   test-distributions:
-    name: Test distributions
+    name: 'Test distributions'
     runs-on: ${{ '{{ matrix.platform.os }}' }}
     needs: build
     strategy:
@@ -146,12 +146,12 @@ jobs:
 {% endfor %}
     steps:
       - name: 'Setup Python'
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v6
         with:
           python-version: ${{ '{{ matrix.python_version }}' }}
           architecture: ${{ '{{ matrix.platform.python_architecture }}' }}
       - name: 'Download distributions'
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v6
         with:
           name: dist
           path: dist
@@ -159,18 +159,30 @@ jobs:
         run: python -m pip install --find-links=dist --no-deps ${{ '{{ github.event.repository.name }}' }}
 
   deploy:
-    name: 'Deploy'
+    name: 'Deploy to PyPI'
     environment: release
     needs: test-distributions
+    permissions:
+      id-token: write
     runs-on: ubuntu-latest
     steps:
       - name: 'Download distributions'
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v6
         with:
-          name: dist
+          merge-multiple: true
           path: dist
-      - name: 'PyPI upload'
-        uses: pypa/gh-action-pypi-publish@v1.8.14
+          pattern: dist-*
+      - name: 'Upload to Test PyPI'
+        uses: pypa/gh-action-pypi-publish@release/v1
         with:
-          packages_dir: dist
+          packages-dir: dist
+          password: ${{ '{{ secrets.TEST_PYPI_API_TOKEN }}' }}
+          repository-url: https://test.pypi.org/legacy/
+          skip-existing: ${{ '{{ github.actor == \'dependabot[bot]\' }}' }}
+        continue-on-error: true
+      - name: 'Upload to PyPI'
+        if: github.actor != 'dependabot[bot]'
+        uses: pypa/gh-action-pypi-publish@release/v1
+        with:
+          packages-dir: dist
           password: ${{ '{{ secrets.PYPI_API_TOKEN }}' }}
