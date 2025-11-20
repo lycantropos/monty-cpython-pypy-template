@@ -88,7 +88,7 @@ Run
 pytest
 ```
 
-#### Inside `Docker` container
+#### `Docker` container
 
 Run
 
