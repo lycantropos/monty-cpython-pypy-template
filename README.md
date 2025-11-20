@@ -35,16 +35,10 @@ git clone https://github.com/{{github_login}}/{{project}}.git
 cd {{project}}
 ```
 
-Install dependencies
-
-```bash
-python -m pip install -r requirements.txt
-```
-
 Install
 
 ```bash
-python setup.py install
+python -m pip install -e '.'
 ```
 
 Development
