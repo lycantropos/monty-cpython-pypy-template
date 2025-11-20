@@ -41,6 +41,7 @@ jobs:
     name: 'Test'
     runs-on: ${{ '{{ matrix.platform.os }}' }}
     strategy:
+      fail-fast: false
       matrix:
         python_version: [ '{{ min_version_of['python'].split('.')[0] }}.{{ range(min_version_of['python'].split('.')[1]|int, (max_version_of['python'].split('.')[1])|int + 1) | join('\', \'' + min_version_of['python'].split('.')[0] + '.') }}' ]
         platform: [
