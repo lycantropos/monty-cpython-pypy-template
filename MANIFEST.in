@@ -1,3 +1,2 @@
 include LICENSE
 include {{project}}/py.typed
-recursive-include {{project}} *.pyi
