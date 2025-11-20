@@ -22,6 +22,10 @@ repos:
     rev: v1.39.2
     hooks:
       - id: typos
+  - repo: https://github.com/rhysd/actionlint
+    rev: v1.7.8
+    hooks:
+      - id: actionlint
   - repo: https://github.com/astral-sh/ruff-pre-commit
     # Ruff version.
     rev: v0.14.5
@@ -48,7 +52,3 @@ repos:
           - "hypothesis>=6.148.2,<7.0"
           - "pytest>=9.0.1,<10.0"
           - "types-setuptools"
-  - repo: https://github.com/rhysd/actionlint
-    rev: v1.7.8
-    hooks:
-      - id: actionlint
