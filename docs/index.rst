@@ -1,11 +1,11 @@
-Welcome to correct's documentation!
-===================================
+Welcome to {{project}}'s documentation!
+============================{{"=" * project|length}}
 
 .. note::
    If object is not listed in documentation
    it should be considered as implementation detail
    that can change and should not be relied upon.
 
-.. automodule:: correct.predicates
+.. automodule:: {{project}}
     :members:
     :imported-members:
