@@ -1,16 +1,16 @@
-{{project}}
-{{"=" * project|length}}
+# {{project}}
 
-[![](https://github.com/{{github_login}}/{{project}}/workflows/CI/badge.svg)](https://github.com/{{github_login}}/{{project}}/actions/workflows/ci.yml "Github Actions")
-[![](https://codecov.io/gh/{{github_login}}/{{project}}/branch/master/graph/badge.svg)](https://codecov.io/gh/{{github_login}}/{{project}} "Codecov")
-[![](https://img.shields.io/github/license/{{github_login}}/{{project}}.svg)](https://github.com/{{github_login}}/{{project}}/blob/master/LICENSE "License")
-[![](https://badge.fury.io/py/{{project.replace("_", "-")}}.svg)](https://badge.fury.io/py/{{project.replace("_", "-")}} "PyPI")
+[![Github Actions](https://github.com/{{github_login}}/{{project}}/workflows/CI/badge.svg)](https://github.com/{{github_login}}/{{project}}/actions/workflows/ci.yml "Github Actions")
+[![Codecov](https://codecov.io/gh/{{github_login}}/{{project}}/branch/master/graph/badge.svg)](https://codecov.io/gh/{{github_login}}/{{project}} "Codecov")
+[![License](https://img.shields.io/github/license/{{github_login}}/{{project}}.svg)](https://github.com/{{github_login}}/{{project}}/blob/master/LICENSE "License")
+[![PyPI](https://badge.fury.io/py/{{project.replace("_", "-")}}.svg)](https://badge.fury.io/py/{{project.replace("_", "-")}} "PyPI")
 
 In what follows `python` is an alias for `python{{min_version_of['python']}}` or `pypy{{min_version_of['pypy']}}`
 or any later version (`python{{min_version_of['python'].split('.')[0]}}.{{min_version_of['python'].split('.')[1]|int + 1}}`, `pypy{{min_version_of['pypy'].split('.')[0]}}.{{min_version_of['pypy'].split('.')[1]|int + 1}}` and so on).
 
-Installation
-------------
+## Installation
+
+### Prerequisites
 
 Install the latest `pip` & `setuptools` packages versions
 
@@ -41,12 +41,11 @@ Install
 python -m pip install -e '.'
 ```
 
-Development
------------
+## Development
 
 ### Bumping version
 
-#### Preparation
+#### Prerequisites
 
 Install [bump-my-version](https://github.com/callowayproject/bump-my-version#installation).
 
@@ -93,10 +92,13 @@ pytest
 Run
 
 - with `CPython`
+
   ```bash
   docker-compose --file docker-compose.cpython.yml up
   ```
+
 - with `PyPy`
+
   ```bash
   docker-compose --file docker-compose.pypy.yml up
   ```
@@ -106,15 +108,19 @@ Run
 Run
 
 - with `CPython`
+
   ```bash
   ./run-tests.sh
   ```
+
   or
+
   ```bash
   ./run-tests.sh cpython
   ```
 
 - with `PyPy`
+
   ```bash
   ./run-tests.sh pypy
   ```
@@ -124,14 +130,19 @@ Run
 Run
 
 - with `CPython`
+
   ```powershell
   .\run-tests.ps1
   ```
+
   or
+
   ```powershell
   .\run-tests.ps1 cpython
   ```
+
 - with `PyPy`
+
   ```powershell
   .\run-tests.ps1 pypy
   ```
