@@ -19,7 +19,7 @@ from datetime import date
 import {{project}}
 
 project = {{project}}.__name__
-copyright = '{}, {{full_name}}'.format(date.today().year)
+copyright = '{}, {{full_name}}'.format(date.today().year)  # noqa: A001
 author = '{{full_name}}'
 
 # The full version, including alpha/beta/rc tags
