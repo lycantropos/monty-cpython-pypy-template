@@ -15,7 +15,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: 'Checkout'
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
       - name: 'Setup Python'
         uses: actions/setup-python@v6
         with:
@@ -78,7 +78,7 @@ jobs:
 {% endfor %}
     steps:
       - name: 'Checkout'
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
       - name: 'Setup Python'
         uses: actions/setup-python@v6
         with:
@@ -117,7 +117,7 @@ jobs:
     needs: pre-deploy
     steps:
       - name: 'Checkout'
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
       - name: 'Setup Python'
         uses: actions/setup-python@v6
       - name: 'Install packaging tools'
@@ -125,7 +125,7 @@ jobs:
       - name: 'Build'
         run: python -m build --sdist --wheel
       - name: 'Upload'
-        uses: actions/upload-artifact@v5
+        uses: actions/upload-artifact@v6
         with:
           name: dist
           path: dist
@@ -171,7 +171,7 @@ jobs:
           python-version: ${{ '{{ matrix.python_version }}' }}
           architecture: ${{ '{{ matrix.platform.python_architecture }}' }}
       - name: 'Download distributions'
-        uses: actions/download-artifact@v6
+        uses: actions/download-artifact@v7
         with:
           name: dist
           path: dist
@@ -191,11 +191,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: 'Download distributions'
-        uses: actions/download-artifact@v6
+        uses: actions/download-artifact@v7
         with:
-          merge-multiple: true
+          name: dist
           path: dist
-          pattern: dist-*
       - name: 'Upload to Test PyPI'
         uses: pypa/gh-action-pypi-publish@release/v1
         with:
